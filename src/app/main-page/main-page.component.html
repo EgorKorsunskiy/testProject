@@ -1,0 +1,14 @@
+<div class="body">
+    <div class="search-container" #searchContainer>
+        <input type="text" placeholder="Enter something..." class="search-input">
+        <button class="search-button" (click)="Search($event.target.parentNode.children[0])" #searchButton>Search</button>
+    </div>
+    <div class="images-container" #imagesContainer>
+        <div class="images-container-offset">
+            <div *ngFor="let image of Images">
+                <img [src]="image.webformatURL" class="images-item" (click)="NavigateToImageDetail(image)">
+            </div>
+        </div>
+        <h1 class="images-no_result hidden" #noResults>Nothing found :(</h1>
+    </div>
+</div>

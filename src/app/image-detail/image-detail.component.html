@@ -1,0 +1,14 @@
+<div class="image-detail">
+    <div>
+      <h1>Author: {{author}}</h1>
+    </div>
+    <div class="image-container" #ImageContainer>
+      <img mat-card-image [src]="imageUrl" class="image">
+    </div>
+    <div>
+      <h2>Information:</h2>
+      <p>{{downloads}} downloads</p>
+      <p>{{favorites}} favorites</p>
+      <p>{{likes}} likes</p>
+    </div>
+  </div>

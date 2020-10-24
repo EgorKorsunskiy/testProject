@@ -1,8 +1,4 @@
-*{
-    padding: 0%;
-    margin: 0%;
-}
-body{
+.body{
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -69,10 +65,13 @@ body{
     width: 27vw;
     height: 35vh;
     margin: 2vh 0 2vh 0;
+    object-fit:cover;
+    cursor: pointer;
+    outline: none;
 }
 .images-no_result{
     color: #f0eff4;
-    margin: auto;
+    text-align: center;
 }
 
 

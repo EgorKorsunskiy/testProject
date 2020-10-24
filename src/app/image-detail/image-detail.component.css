@@ -1,0 +1,27 @@
+*{
+    text-align: center;
+}
+mat-card-header{
+    display: block;
+}
+.image-detail{
+    background-color: #347fc4;
+    color: #f0eff4;
+    height: 100%;
+    width: 100%;
+}
+.image-container{
+    width: auto;
+    margin: 1% 0px 3% 0px;
+    height: auto;
+    max-height: 72%;
+    text-align: center;
+    overflow: hidden;
+}
+.image{
+    margin: 0%;
+    width: auto;
+}
+.scroll{
+    overflow: scroll;
+}
