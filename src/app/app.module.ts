@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,8 +16,7 @@ import { ImageDetailComponent } from './image-detail/image-detail.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    MatCardModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
