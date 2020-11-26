@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { stringify } from 'querystring';
-
 import { IImageResponse, IHits } from '../../assets/interfaces/ImageResponseInterface'
 
 @Component({
@@ -11,22 +9,28 @@ import { IImageResponse, IHits } from '../../assets/interfaces/ImageResponseInte
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent{
-  @ViewChild('searchContainer') searchContainerEl:ElementRef;
-  @ViewChild('imagesContainer') imagesContainer:ElementRef;
-  @ViewChild('searchButton') searchButtonEl:ElementRef;
-  @ViewChild('noResults') noResultsEl:ElementRef;
   public Images: IHits[];
   public url: string;
 
+  public inputValue: string = '';
+
+  public isSearching: boolean = false;
+  public isSearchingFinished: boolean = false;
+  public isNoResults: boolean = false;
+
   constructor(private _router:Router, private _http:HttpClient){}
 
-  Search(e:HTMLInputElement){
-    if(!e.value){
+  SetInputValue(e:HTMLInputElement):void{
+    this.inputValue = e.value;
+  }
+
+  Search():void{
+    if(!this.inputValue){
       alert('Enter something!');return;
     }
 
-    this.searchButtonEl.nativeElement.innerText = 'Searching';
-    this.url = encodeURI(`https://pixabay.com/api/?key=18601823-36af0fdddc3ba24537f0e57fc&q=${e.value}&per_page=${this.CountTheNumberOfPictures()}`);
+    this.isSearching = true;
+    this.url = encodeURI(`https://pixabay.com/api/?key=18601823-36af0fdddc3ba24537f0e57fc&q=${this.inputValue}&per_page=${this.CountTheNumberOfPictures()}`);
 
     this.MakeRequest(this.url);
   }
@@ -42,35 +46,23 @@ export class MainPageComponent{
   MakeRequest(RequestUrl:string):void{
     this._http.get<IImageResponse>(RequestUrl)
     .subscribe(data => {
-      this.searchButtonEl.nativeElement.innerText = 'Search';
-      this.searchContainerEl.nativeElement.classList.add('search-container-after_search');
-      if(this.ISTherePictures(data.hits)){
-        return;
-      }
-      else{
+      this.isSearching = false;
+      this.isSearchingFinished = true;
+      this.CheckAndTogglePictures(data.hits);
       this.Images = data.hits;
-      }
     },
       err => {
-        this.searchButtonEl.nativeElement.innerText = 'Search';
+        this.isSearching = false;
         alert(`Ops, something went wrong: ${err.statusText}`);
     })
   }
 
-  ISTherePictures(el:IHits[]):boolean{
+  CheckAndTogglePictures(el:IHits[]):void{
     if(!el.length){
-      if(this.noResultsEl.nativeElement.classList.contains('hidden')){
-          this.noResultsEl.nativeElement.classList.remove('hidden');
-          this.imagesContainer.nativeElement.children[0].classList.add('hidden');
-          return false;
-      }
+      this.isNoResults = true;
   }
-  else{
-      if(!this.noResultsEl.nativeElement.classList.contains('hidden')){
-        this.noResultsEl.nativeElement.classList.add('hidden');
-        this.imagesContainer.nativeElement.children[0].classList.remove('hidden');
-        return true;
-      }
+    else{ 
+      this.isNoResults = false;
   }
   }
 

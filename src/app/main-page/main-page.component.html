@@ -1,14 +1,27 @@
 <div class="body">
-    <div class="search-container" #searchContainer>
-        <input type="text" placeholder="Enter something..." class="search-input">
-        <button class="search-button" (click)="Search($event.target.parentNode.children[0])" #searchButton>Search</button>
+    <div [ngClass]="{
+        'search-container': true,
+        'search-container-after_search': isSearchingFinished
+    }">
+        <input type="text" placeholder="Enter something..." class="search-input" (input)=SetInputValue($event.target)>
+        <button class="search-button" (click)="Search()">
+            {{isSearching?
+            "Searching":
+            "Search"}}
+        </button>
     </div>
-    <div class="images-container" #imagesContainer>
-        <div class="images-container-offset">
+    <div class="images-container">
+        <div [ngClass]="{
+            'images-container-offset': true,
+            'hidden': isNoResults
+        }">
             <div *ngFor="let image of Images">
                 <img [src]="image.webformatURL" class="images-item" (click)="NavigateToImageDetail(image)">
             </div>
         </div>
-        <h1 class="images-no_result hidden" #noResults>Nothing found :(</h1>
+        <h1 [ngClass]="{
+            'images-no_result': true,
+            'hidden': !isNoResults 
+        }">Nothing found :(</h1>
     </div>
 </div>

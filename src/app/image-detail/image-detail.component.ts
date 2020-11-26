@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IHits, IImageResponse } from 'src/assets/interfaces/ImageResponseInterface';
 
 
@@ -9,15 +9,15 @@ import { IHits, IImageResponse } from 'src/assets/interfaces/ImageResponseInterf
   styleUrls: ['./image-detail.component.css']
 })
 export class ImageDetailComponent implements OnInit {
-  @ViewChild('ImageContainer') ImageContainerEl:ElementRef;
+  public url:URL;
 
-  url:URL;
+  public imageUrl:string;
+  public author:string;
+  public downloads:number;
+  public favorites:number;
+  public likes:number;
 
-  imageUrl:string;
-  author:string;
-  downloads:number;
-  favorites:number;
-  likes:number;
+  public isImageSizeBigger:boolean = false; 
 
   constructor(private _http:HttpClient) { }
 
@@ -42,7 +42,7 @@ export class ImageDetailComponent implements OnInit {
       this.likes = obj.likes;
 
       if(window.innerWidth < obj.webformatWidth){
-        this.ImageContainerEl.nativeElement.classList.add('scroll');
+        this.isImageSizeBigger = true;
       }
     })
   }
